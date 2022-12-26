@@ -8,6 +8,7 @@ import ru.yusupov.firstproject.models.Book;
 import ru.yusupov.firstproject.models.Person;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PersonDAO {
@@ -41,5 +42,9 @@ public class PersonDAO {
 
     public List<Book> bookList(int id) {
         return jdbcTemplate.query("select * from book where person_id = ?", new BeanPropertyRowMapper<>(Book.class), id);
+    }
+
+    public Optional<Person> getPerson(String fullName) {
+        return jdbcTemplate.query("select fullname from person where fullname = ?", new BeanPropertyRowMapper<>(Person.class), fullName).stream().findAny();
     }
 }
